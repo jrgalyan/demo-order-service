@@ -93,7 +93,6 @@ public class RestTemplateConfig {
     public Retry productServiceRetry() {
         RetryConfig config = RetryConfig.custom()
                 .maxAttempts(3)
-                .waitDuration(Duration.ofSeconds(1))
                 .intervalFunction(exponentialBackoffInterval())
                 .retryOnException(throwable -> 
                     throwable instanceof org.springframework.web.client.ResourceAccessException ||
@@ -110,7 +109,6 @@ public class RestTemplateConfig {
     public Retry paymentServiceRetry() {
         RetryConfig config = RetryConfig.custom()
                 .maxAttempts(2) // Fewer retries for payment operations
-                .waitDuration(Duration.ofSeconds(2))
                 .intervalFunction(exponentialBackoffInterval())
                 .retryOnException(throwable -> 
                     throwable instanceof org.springframework.web.client.ResourceAccessException)
@@ -126,7 +124,6 @@ public class RestTemplateConfig {
     public Retry notificationServiceRetry() {
         RetryConfig config = RetryConfig.custom()
                 .maxAttempts(4) // More retries for notifications
-                .waitDuration(Duration.ofMillis(500))
                 .intervalFunction(exponentialBackoffInterval())
                 .retryOnException(throwable -> 
                     throwable instanceof org.springframework.web.client.ResourceAccessException ||
