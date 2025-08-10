@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -105,6 +106,7 @@ class OrderController {
     /**
      * Get orders for a specific user (admin endpoint)
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/user/{userId}")
     ResponseEntity<Page<OrderResponse>> getOrdersForUser(
             @PathVariable UUID userId,
@@ -120,6 +122,7 @@ class OrderController {
     /**
      * Get orders by status
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/status/{status}")
     ResponseEntity<Page<OrderResponse>> getOrdersByStatus(
             @PathVariable OrderStatus status,
@@ -147,6 +150,7 @@ class OrderController {
     /**
      * Update order status
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/status")
     ResponseEntity<OrderResponse> updateOrderStatus(@PathVariable UUID id,
                                                    @RequestParam OrderStatus status) {
@@ -170,6 +174,7 @@ class OrderController {
     /**
      * Get orders that need processing
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/processing-queue")
     ResponseEntity<List<OrderResponse>> getOrdersForProcessing() {
         logger.info("Received request to get orders for processing");
@@ -181,6 +186,7 @@ class OrderController {
     /**
      * Get overdue orders
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/overdue")
     ResponseEntity<List<OrderResponse>> getOverdueOrders(
             @RequestParam(defaultValue = "24") int hoursOverdue) {
@@ -193,6 +199,7 @@ class OrderController {
     /**
      * Get order statistics
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/statistics")
     ResponseEntity<OrderService.OrderStatistics> getOrderStatistics() {
         logger.info("Received request to get order statistics");
@@ -204,6 +211,7 @@ class OrderController {
     /**
      * Get daily order count
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/statistics/daily-count")
     ResponseEntity<Long> getDailyOrderCount() {
         logger.info("Received request to get daily order count");
@@ -215,6 +223,7 @@ class OrderController {
     /**
      * Get total sales amount for date range
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/statistics/sales")
     ResponseEntity<BigDecimal> getTotalSalesAmount(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant startDate,
@@ -228,6 +237,7 @@ class OrderController {
     /**
      * Get orders by date range
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/date-range")
     ResponseEntity<Page<OrderResponse>> getOrdersByDateRange(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant startDate,
@@ -293,6 +303,7 @@ class OrderController {
     /**
      * Bulk update order status (admin endpoint)
      */
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/bulk-status-update")
     ResponseEntity<BulkUpdateResult> bulkUpdateOrderStatus(
             @RequestBody BulkStatusUpdateRequest request) {
