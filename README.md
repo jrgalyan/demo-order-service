@@ -24,5 +24,7 @@ If you really, *really* want to build this locally and run the tests, you'll nee
 1. Clone boot-demo-parent
    1. Run `mvn install` in the root of boot-demo-parent to install the parent pom into `~/.m2/repository/...`
 2. Clone demo-shared-common
-   1. Run `mvn install` in the root of demo-shared-common to install the jar into `~/.m2/repository/...`
-3. Now you can build this project and run the tests
+   1. Run `mvn install` in the root of demo-shared-common to build and install the jar into `~/.m2/repository/...`
+3. Now you can build this project and run the tests:
+   1. `mvn clean test` will build the service and run the tests
+   2. If you run `mvn package` or any other maven goal that includes `package`, you'll also get an SBOM in the build output because of the inclusion of the CycloneDX maven plugin in the build configuration. (It will be `target/order-service-1.0-SNAPSHOT-sbom.json`)
