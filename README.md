@@ -18,3 +18,11 @@ This service uses Spring Security with JWT authentication. The access token is e
 - Stateless API: no server-side sessions.
 - Actuator endpoints `/actuator/health`, `/actuator/info`, and `/actuator/metrics` are publicly accessible.
 - CSRF is disabled for this API service. When using cookies in a browser, ensure the login service sets tokens with `HttpOnly`, `Secure`, and an appropriate `SameSite` attribute to mitigate CSRF.
+
+## Build and Run Tests
+If you really, *really* want to build this locally and run the tests, you'll need to do the following:
+1. Clone boot-demo-parent
+   1. Run `mvn install` in the root of boot-demo-parent to install the parent pom into `~/.m2/repository/...`
+2. Clone demo-shared-common
+   1. Run `mvn install` in the root of demo-shared-common to install the jar into `~/.m2/repository/...`
+3. Now you can build this project and run the tests
